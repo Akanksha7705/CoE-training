@@ -1,6 +1,6 @@
 project = int(input("Project marks: "))
 internal = int(input("Internal marks: "))
-external = int(input("external marks: "))
+external = int(input("External marks: "))
 if project >= 50 and internal >= 50 and external >= 50:
     pro = (70/100) * project
     inter = (10/100) * internal
@@ -14,8 +14,8 @@ if project >= 50 and internal >= 50 and external >= 50:
     else:
         print("Grade is C")
 elif internal < 50:
-    print("Failed in internal")
+    print("Failed in Internal")
 elif external < 50:
-    print("Failed in external")
+    print("Failed in External")
 else:
-    print("Failed in project")
+    print("Failed in Project")
