@@ -1,0 +1,432 @@
+mysql> create database cvr
+    -> ;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use cvr;
+Database changed
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> create table it;
+ERROR 1113 (42000): A table must have at least 1 column
+mysql> create table it (name varchar(20))
+    -> ;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> show tables;
++---------------+
+| Tables_in_cvr |
++---------------+
+| it            |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> create table student(sno int, sname varchar(20), marks int, city varchar(30),mobile int, gender varchar(40));
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from student;
+Empty set (0.00 sec)
+
+mysql> show tables;
++---------------+
+| Tables_in_cvr |
++---------------+
+| it            |
+| student       |
++---------------+
+2 rows in set (0.00 sec)
+
+mysql> insert into student values(1,"Akanksha",25,"hyderabad",990987654,"female");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from student;
++------+----------+-------+-----------+-----------+--------+
+| sno  | sname    | marks | city      | mobile    | gender |
++------+----------+-------+-----------+-----------+--------+
+|    1 | Akanksha |    25 | hyderabad | 990987654 | female |
++------+----------+-------+-----------+-----------+--------+
+1 row in set (0.00 sec)
+
+mysql>  insert into student values(2,"shreya",50,"hyderabad",9903456134,"female");
+ERROR 1264 (22003): Out of range value for column 'mobile' at row 1
+mysql>  insert into student values(2,"shreya",50,"hyderabad",9903456114,"female");
+ERROR 1264 (22003): Out of range value for column 'mobile' at row 1
+mysql>  insert into student values(2,"shreya",50,"hyderabad",99034564,"female");
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  delete table student;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table student' at line 1
+mysql> drop table student
+    -> ;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show tables;
++---------------+
+| Tables_in_cvr |
++---------------+
+| it            |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> create table student(sno int, sname varchar(20), marks int, city varchar(30),mobile bigint, gender varchar(40));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>  insert into student values(2,"shreya",50,"hyderabad",9903456134,"female");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values(1,"Akanksha",25,"hyderabad",990987654,"female");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from student;
++------+----------+-------+-----------+------------+--------+
+| sno  | sname    | marks | city      | mobile     | gender |
++------+----------+-------+-----------+------------+--------+
+|    2 | shreya   |    50 | hyderabad | 9903456134 | female |
+|    1 | Akanksha |    25 | hyderabad |  990987654 | female |
++------+----------+-------+-----------+------------+--------+
+2 rows in set (0.00 sec)
+
+mysql> update student set mobile = 8990987564 where sno = 1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student;
++------+----------+-------+-----------+------------+--------+
+| sno  | sname    | marks | city      | mobile     | gender |
++------+----------+-------+-----------+------------+--------+
+|    2 | shreya   |    50 | hyderabad | 9903456134 | female |
+|    1 | Akanksha |    25 | hyderabad | 8990987564 | female |
++------+----------+-------+-----------+------------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student order by sno;
++------+----------+-------+-----------+------------+--------+
+| sno  | sname    | marks | city      | mobile     | gender |
++------+----------+-------+-----------+------------+--------+
+|    1 | Akanksha |    25 | hyderabad | 8990987564 | female |
+|    2 | shreya   |    50 | hyderabad | 9903456134 | female |
++------+----------+-------+-----------+------------+--------+
+2 rows in set (0.00 sec)
+
+mysql> delete from student where sno = 2;
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  insert into student(sno int, sname varchar(20), marks int, city varchar(30),mobile int, gender varchar(40)) values(2,"abc",50,"hyd",9903456134,"female"), (3,"xyz", 60,"chennai",767105643,"male");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'int, sname varchar(20), marks int, city varchar(30),mobile int, gender varchar(4' at line 1
+
+
+mysql> select * from student;
++------+----------+-------+-----------+------------+--------+
+| sno  | sname    | marks | city      | mobile     | gender |
++------+----------+-------+-----------+------------+--------+
+|    1 | Akanksha |    25 | hyderabad | 8990987564 | female |
+|    2 | abc      |    50 | hyd       | 9903456134 | female |
+|    3 | xyz      |    60 | chennai   |  767105643 | male   |
++------+----------+-------+-----------+------------+--------+
+3 rows in set (0.00 sec)
+
+mysql>  insert into student(sno int, sname varchar(20), marks int, city varchar(30),mobile int, gender varchar(40)) values(5,"pqr",53,"hyd",9904561231,"female"), (4,"xyz", 60,"delhi",7671056123,"male");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'int, sname varchar(20), marks int, city varchar(30),mobile int, gender varchar(4' at line 1
+mysql>  insert into student(sno, sname, marks , city,mobile , gender) values (5,"pqr",53,"hyd",9904561231,"female"), (4,"xyz", 60,"delhi",7671056123,"male");
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from student order by sno;
++------+----------+-------+-----------+------------+--------+
+| sno  | sname    | marks | city      | mobile     | gender |
++------+----------+-------+-----------+------------+--------+
+|    1 | Akanksha |    25 | hyderabad | 8990987564 | female |
+|    2 | abc      |    50 | hyd       | 9903456134 | female |
+|    3 | xyz      |    60 | chennai   |  767105643 | male   |
+|    4 | xyz      |    60 | delhi     | 7671056123 | male   |
+|    5 | pqr      |    53 | hyd       | 9904561231 | female |
++------+----------+-------+-----------+------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> update student set mobile = 7671056435 where city = "chennai";
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student order by sno;
++------+----------+-------+-----------+------------+--------+
+| sno  | sname    | marks | city      | mobile     | gender |
++------+----------+-------+-----------+------------+--------+
+|    1 | Akanksha |    25 | hyderabad | 8990987564 | female |
+|    2 | abc      |    50 | hyd       | 9903456134 | female |
+|    3 | xyz      |    60 | chennai   | 7671056435 | male   |
+|    4 | xyz      |    60 | delhi     | 7671056123 | male   |
+|    5 | pqr      |    53 | hyd       | 9904561231 | female |
++------+----------+-------+-----------+------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student;
++------+----------+-------+-----------+------------+--------+
+| sno  | sname    | marks | city      | mobile     | gender |
++------+----------+-------+-----------+------------+--------+
+|    1 | Akanksha |    25 | hyderabad | 8990987564 | female |
+|    2 | abc      |    50 | hyd       | 9903456134 | female |
+|    3 | xyz      |    60 | chennai   | 7671056435 | male   |
+|    5 | pqr      |    53 | hyd       | 9904561231 | female |
+|    4 | xyz      |    60 | delhi     | 7671056123 | male   |
++------+----------+-------+-----------+------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student where city = "Hyerabad"
+    -> ;
+Empty set (0.00 sec)
+
+mysql> select * from student where city = "Hyderabad";
++------+----------+-------+-----------+------------+--------+
+| sno  | sname    | marks | city      | mobile     | gender |
++------+----------+-------+-----------+------------+--------+
+|    1 | Akanksha |    25 | hyderabad | 8990987564 | female |
++------+----------+-------+-----------+------------+--------+
+1 row in set (0.00 sec)
+
+mysql> insert into student values(6,"jhy",52,"pune",990987654,"female");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from student where city in('pune','hyderabad');
++------+----------+-------+-----------+------------+--------+
+| sno  | sname    | marks | city      | mobile     | gender |
++------+----------+-------+-----------+------------+--------+
+|    1 | Akanksha |    25 | hyderabad | 8990987564 | female |
+|    6 | jhy      |    52 | pune      |  990987654 | female |
++------+----------+-------+-----------+------------+--------+
+2 rows in set (0.00 sec)
+
+mysql> delete from student where sno = 6;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(6,"jhy",52,"pune",9909876545,"female");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from student where city in('pune','hyderabad');
++------+----------+-------+-----------+------------+--------+
+| sno  | sname    | marks | city      | mobile     | gender |
++------+----------+-------+-----------+------------+--------+
+|    1 | Akanksha |    25 | hyderabad | 8990987564 | female |
+|    6 | jhy      |    52 | pune      | 9909876545 | female |
++------+----------+-------+-----------+------------+--------+
+2 rows in set (0.00 sec)
+
+mysql> update student set city = "hyderabad" where city ='hyd';
+Query OK, 2 rows affected (0.00 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from student where city in('pune','hyderabad');
++------+----------+-------+-----------+------------+--------+
+| sno  | sname    | marks | city      | mobile     | gender |
++------+----------+-------+-----------+------------+--------+
+|    1 | Akanksha |    25 | hyderabad | 8990987564 | female |
+|    2 | abc      |    50 | hyderabad | 9903456134 | female |
+|    5 | pqr      |    53 | hyderabad | 9904561231 | female |
+|    6 | jhy      |    52 | pune      | 9909876545 | female |
++------+----------+-------+-----------+------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from student where city='hyderabad' and gender = 'female' union  select * from student where city='pune' and gender = 'male' union select * from student where city='chennai'
+    -> ;
++------+----------+-------+-----------+------------+--------+
+| sno  | sname    | marks | city      | mobile     | gender |
++------+----------+-------+-----------+------------+--------+
+|    1 | Akanksha |    25 | hyderabad | 8990987564 | female |
+|    2 | abc      |    50 | hyderabad | 9903456134 | female |
+|    5 | pqr      |    53 | hyderabad | 9904561231 | female |
+|    3 | xyz      |    60 | chennai   | 7671056435 | male   |
++------+----------+-------+-----------+------------+--------+
+4 rows in set (0.00 sec)
+
+mysql>  insert into student(sno, sname, marks , city,mobile , gender) values (5,"pqr",53,"hyd",9904561231,"female"), (4,"xyz", 60,"delhi",7671056123,"male")
+    -> (7,"ss",70,"pune",7671075442,"male");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(7,"ss",70,"pune",7671075442,"male")' at line 2
+mysql> select * from student order by marks;
++------+----------+-------+-----------+------------+--------+
+| sno  | sname    | marks | city      | mobile     | gender |
++------+----------+-------+-----------+------------+--------+
+|    1 | Akanksha |    25 | hyderabad | 8990987564 | female |
+|    2 | abc      |    50 | hyderabad | 9903456134 | female |
+|    6 | jhy      |    52 | pune      | 9909876545 | female |
+|    5 | pqr      |    53 | hyderabad | 9904561231 | female |
+|    3 | xyz      |    60 | chennai   | 7671056435 | male   |
+|    4 | xyz      |    60 | delhi     | 7671056123 | male   |
++------+----------+-------+-----------+------------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from student order by marks desc;
++------+----------+-------+-----------+------------+--------+
+| sno  | sname    | marks | city      | mobile     | gender |
++------+----------+-------+-----------+------------+--------+
+|    3 | xyz      |    60 | chennai   | 7671056435 | male   |
+|    4 | xyz      |    60 | delhi     | 7671056123 | male   |
+|    5 | pqr      |    53 | hyderabad | 9904561231 | female |
+|    6 | jhy      |    52 | pune      | 9909876545 | female |
+|    2 | abc      |    50 | hyderabad | 9903456134 | female |
+|    1 | Akanksha |    25 | hyderabad | 8990987564 | female |
++------+----------+-------+-----------+------------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from student where city = "hyderabad" and marks > 53 and gender ='male' union city ="hyderabad" and marks > 50 and gender = "female" ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'city ="hyderabad" and marks > 50 and gender = "female"' at line 1
+mysql> select * from student where city = "hyderabad" and marks > 53 and gender ='male' union city ="hyderabad" and marks>50 and gender = "female" ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'city ="hyderabad" and marks>50 and gender = "female"' at line 1
+mysql> select * from student where city = "hyderabad" and marks > 53 and gender ='male' union select * from student where city ="hyderabad" and marks>50 and gender = "female";
++------+-------+-------+-----------+------------+--------+
+| sno  | sname | marks | city      | mobile     | gender |
++------+-------+-------+-----------+------------+--------+
+|    5 | pqr   |    53 | hyderabad | 9904561231 | female |
++------+-------+-------+-----------+------------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from student where city = "hyderabad" and marks > 52 and gender ='male' union select * from student where city ="hyderabad" and marks>50 and gender = "female";
++------+-------+-------+-----------+------------+--------+
+| sno  | sname | marks | city      | mobile     | gender |
++------+-------+-------+-----------+------------+--------+
+|    5 | pqr   |    53 | hyderabad | 9904561231 | female |
++------+-------+-------+-----------+------------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from student where city = "pune" and gender='male';
+Empty set (0.00 sec)
+
+mysql> update student set gender = 'male' where id = 5;
+ERROR 1054 (42S22): Unknown column 'id' in 'where clause'
+mysql> update student set gender = 'male' where sno = 5;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student where city = "pune" and gender='male';
+Empty set (0.00 sec)
+
+mysql> update student set gender = 'male' where sno = 6;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student where city = "pune" and gender='male';
++------+-------+-------+------+------------+--------+
+| sno  | sname | marks | city | mobile     | gender |
++------+-------+-------+------+------------+--------+
+|    6 | jhy   |    52 | pune | 9909876545 | male   |
++------+-------+-------+------+------------+--------+
+1 row in set (0.00 sec)
+
+mysql>  insert into student(sno, sname, marks , city,mobile , gender) values (8,"pqr",90,"hyderabad",9904561231,"male"), (7,"xyz", 85,"delhi",7671056123,"male")
+    -> ;
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from student where city ='hyderabad' or city='pune' and marks between 50 and 80;
++------+----------+-------+-----------+------------+--------+
+| sno  | sname    | marks | city      | mobile     | gender |
++------+----------+-------+-----------+------------+--------+
+|    1 | Akanksha |    25 | hyderabad | 8990987564 | female |
+|    2 | abc      |    50 | hyderabad | 9903456134 | female |
+|    5 | pqr      |    53 | hyderabad | 9904561231 | male   |
+|    6 | jhy      |    52 | pune      | 9909876545 | male   |
+|    8 | pqr      |    90 | hyderabad | 9904561231 | male   |
++------+----------+-------+-----------+------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student;
++------+----------+-------+-----------+------------+--------+
+| sno  | sname    | marks | city      | mobile     | gender |
++------+----------+-------+-----------+------------+--------+
+|    1 | Akanksha |    25 | hyderabad | 8990987564 | female |
+|    2 | abc      |    50 | hyderabad | 9903456134 | female |
+|    3 | xyz      |    60 | chennai   | 7671056435 | male   |
+|    5 | pqr      |    53 | hyderabad | 9904561231 | male   |
+|    4 | xyz      |    60 | delhi     | 7671056123 | male   |
+|    6 | jhy      |    52 | pune      | 9909876545 | male   |
+|    8 | pqr      |    90 | hyderabad | 9904561231 | male   |
+|    7 | xyz      |    85 | delhi     | 7671056123 | male   |
++------+----------+-------+-----------+------------+--------+
+8 rows in set (0.00 sec)
+
+mysql> select * from student where marks between 50 and 80 and (city= 'hyderabad' or city ='pune');
++------+-------+-------+-----------+------------+--------+
+| sno  | sname | marks | city      | mobile     | gender |
++------+-------+-------+-----------+------------+--------+
+|    2 | abc   |    50 | hyderabad | 9903456134 | female |
+|    5 | pqr   |    53 | hyderabad | 9904561231 | male   |
+|    6 | jhy   |    52 | pune      | 9909876545 | male   |
++------+-------+-------+-----------+------------+--------+
+3 rows in set (0.00 sec)
+
+
+8. Best city in education based on score
+9.top score in each city
+
+	select city, max(marks as top_score) from student group by city order by max(marks)desc;
+
+10.display topper details in hyderabad.
+
+	select * from studnt where city='hyderabad' 
+
+
+
+mysql> create table salespeople(
+    -> snum INT not null,
+    -> sname varchar(30) not null,
+    -> city varchar(30) not null,
+    -> comm decimal(4,2) not null,
+    -> primary key(snum)
+    -> );
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into salespeople(snum,sname,city,comm) values (1001,"peel","london",0.12),
+    -> (1002,"Serres","San Jose", 0.13),
+    -> (1003,"Axel rod","New York", 0.10),
+    -> (1004,"Motika","London", 0.11),
+    -> (1005,"Fran","London", 0.26),
+    -> (1007,"Rikfin","Barcelona", 0.15);
+Query OK, 6 rows affected (0.00 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from salespeople;
++------+----------+-----------+------+
+| snum | sname    | city      | comm |
++------+----------+-----------+------+
+| 1001 | peel     | london    | 0.12 |
+| 1002 | Serres   | San Jose  | 0.13 |
+| 1003 | Axel rod | New York  | 0.10 |
+| 1004 | Motika   | London    | 0.11 |
+| 1005 | Fran     | London    | 0.26 |
+| 1007 | Rikfin   | Barcelona | 0.15 |
++------+----------+-----------+------+
+6 rows in set (0.00 sec)
+
+mysql> create table customer(
+    -> cnum int not null,
+    -> cname varchar(30) not null,
+    -> city varchar(30) not null,
+    -> rating int not null,
+    -> snum int not null,
+    -> primary key(cnum),
+    -> foreign key(snum) references salespeople(snum));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into customer(cnum,cname,city,rating,snum) values (2001,'Hoffman','London',100,1001);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into customer(cnum,cname,city,rating,snum) values (2002,'Giovanni','Rome',200,1003),
+    -> (2003,'Liu','San Jose',200,1002),
+    -> (2004,'Grass','Berlin',300,1002),
+    -> (2006,'Clemens','London',100,1001),
+    -> (2008,'Cisneros','San Jose',300,1007),
+    -> (2007,'Pereira','Rome',100,1004);
+Query OK, 6 rows affected (0.00 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from customer;
++------+----------+----------+--------+------+
+| cnum | cname    | city     | rating | snum |
++------+----------+----------+--------+------+
+| 2001 | Hoffman  | London   |    100 | 1001 |
+| 2002 | Giovanni | Rome     |    200 | 1003 |
+| 2003 | Liu      | San Jose |    200 | 1002 |
+| 2004 | Grass    | Berlin   |    300 | 1002 |
+| 2006 | Clemens  | London   |    100 | 1001 |
+| 2007 | Pereira  | Rome     |    100 | 1004 |
+| 2008 | Cisneros | San Jose |    300 | 1007 |
++------+----------+----------+--------+------+
+7 rows in set (0.00 sec)
