@@ -1,0 +1,19 @@
+Outlier is a datapoint in dataset that is distant from all observations.A data point that lies outside tthe overall distribution of the dataset.
+
+-> Data point that falls outside of 1.5 times of an interquartile range above the 3rd quartile and below the 1st quartile.
+-> Data point that falls outside of 3 standard devitions. we can use a z score falls outside of 2 standard deviation.
+
+Reason for outlier to exist in dataset?
+ -> Variability in the data.
+ -> An experimental measurement error.
+
+Impacts of having outliers in a dataset?
+ -> It causes various problems during our statistical analysis.
+ -> It may cause a significant impact on the mean and standard deviation.
+
+Ways to find outliers
+ -> Scatter plots
+ -> Box plot
+ -> Using z score
+ -> Using the IQR interquartile range
+
